@@ -4,7 +4,8 @@
   "description": "Creastion of a rest api using NodeJS and MongoDB",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1", 
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,11 @@
   "bugs": {
     "url": "https://github.com/CedricTellier/rest_api/issues"
   },
-  "homepage": "https://github.com/CedricTellier/rest_api#readme"
+  "homepage": "https://github.com/CedricTellier/rest_api#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
