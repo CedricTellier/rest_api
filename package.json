@@ -1,0 +1,24 @@
+{
+  "name": "rest_api",
+  "version": "1.0.0",
+  "description": "Creastion of a rest api using NodeJS and MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CedricTellier/rest_api.git"
+  },
+  "keywords": [
+    "RestAPI",
+    "MongoDB",
+    "NodeJS"
+  ],
+  "author": "Cédric Tellier",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CedricTellier/rest_api/issues"
+  },
+  "homepage": "https://github.com/CedricTellier/rest_api#readme"
+}
