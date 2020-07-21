@@ -49,7 +49,6 @@ exports.delete_an_employee = function(req, res) {
 
 exports.list_all_employees_from_business = function(req, res)
 {
-  console.log('test');
   Employees.find({business: req.params.business}, function(err, employees) {
     if (err)
       res.send(err);

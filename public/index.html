@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Rest API Caddev</title>
+  </head>
+  <body>
+	  <h1 style="text-align: center;">
+		Rest API Caddev
+	  </h1>
+	  <div style="margin-left: 50px;margin-right:50px">
+		<h2 style="margin-top:50px;">Get Employees</h2>
+		<div class="row"style="margin-top:25px;">
+			<div class="col-2">
+				<a class="btn btn-primary " href="http://localhost:3000/employees" role="button">All Employees</a>
+			</div>
+			<div class="col-2">
+				<a class="btn btn-secondary" href="http://localhost:3000/Caddev/employees" role="button">Caddev's Employees</a>
+			</div>
+			<div class="col-2">
+				<a class="btn btn-success" href="http://localhost:3000/Cadcom/employees" role="button">Cadcom's Employees</a>
+			</div>
+			<div class="col-2">
+				<a class="btn btn-danger" href="http://localhost:3000/Capture4cad/employees" role="button">Capture4Cad's Employees</a>
+			</div>
+			<div class="col-2">
+				<a class="btn btn-warning" href="http://localhost:3000/CadworkSA/employees" role="button">Cadwork SA's Employees</a>
+			</div>
+			<div class="col-2">
+				<a class="btn btn-dark" href="http://localhost:3000/Cadwork/employees" role="button">Cadwork France's Employees</a>
+			</div>
+		</div>
+		<h2 style="margin-top:50px;">Create an Employee</h2>
+		<div class="row" style="margin-top:25px;">
+			<div class="col-6">
+				<form>
+					<div class="form-group">
+						<label for="firstname">First Name</label>
+						<input type="text" class="form-control" id="firstname" placeholder="Enter a Firstname" required>
+					</div>
+					<div class="form-group">
+						<label for="lastname">Last Name</label>
+						<input type="text" class="form-control" id="lastname" placeholder="Enter a Lastname" required>
+					</div>
+					<div class="form-group">
+						<label for="business">Select a Company</label>
+						<select class="form-control" id="business">
+						<option value="Caddev">Caddev</option>
+						<option value="CadworkSA">Cadwork SA</option>
+						<option value="Cadwork">Cadwork France</option>
+						<option value="Cadcom">Cadcom</option>
+						<option value="Cadskills">Cadskills</option>
+						<option value="Capture4cad">Capture4Cad</option>
+						</select>
+					</div>
+					<a type="submit" class="btn btn-primary" onclick="createNewEmployee()" role="button">Create</a>
+				</form>
+			</div>
+			<div class="col-6"></div>
+		</div>
+	</div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script>
+		function createNewEmployee()
+		{
+			var firstname = document.getElementById("firstname").value;
+			var lastname = document.getElementById("lastname").value;
+			if(!firstname.length)
+			{
+				return alert('le champs du prénom est manquant, merci de la compléter!');
+			}
+			else if (!lastname.length)
+			{
+				return alert('le champs du nom de famille est manquant, merci de la compléter!');
+			}
+			var business = document.getElementById("business").options[document.getElementById("business").selectedIndex].value;	
+			let formData = {'lastname': lastname, 'firstname': firstname, 'business': business };
+ 
+			var formBody = [];
+			for (var property in formData) {
+				var encodedKey = encodeURIComponent(property);
+				var encodedValue = encodeURIComponent(formData[property]);
+				formBody.push(encodedKey + "=" + encodedValue);
+			}
+			formBody = formBody.join("&");
+
+			fetch('http://localhost:3000/employees', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+				},				
+				body: formBody
+			})
+			.then(response => console.log(response))
+			.catch(error => console.log(error))
+		}
+	</script>
+  </body>
+</html>
