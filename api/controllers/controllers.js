@@ -38,7 +38,7 @@ exports.update_an_employee = function(req, res) {
 };
 
 exports.delete_an_employee = function(req, res) {
-	Employees.remove({
+	Employees.deleteOne({
     _id: req.params._id
   }, function(err, employee) {
     if (err)
