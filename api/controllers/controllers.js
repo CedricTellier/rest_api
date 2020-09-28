@@ -30,7 +30,7 @@ exports.read_an_employee = function(req, res) {
 };
 
 exports.update_an_employee = function(req, res) {
-	Employees.findOneAndUpdate({_id: req.params._id},  req.body, {new: true}, function(err, employee) {
+	Employees.useFindAndModify({_id: req.params._id},  req.body, {new: true}, function(err, employee) {
     if (err)
       res.send(err);
     res.json(employee);

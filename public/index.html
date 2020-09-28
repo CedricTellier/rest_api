@@ -164,7 +164,7 @@
 			}
 			formBody = formBody.join("&");
 
-			fetch('https://restapitellierc.herokuapp.com/employees', {
+			fetch('/employees', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -188,7 +188,7 @@
 			var id = row.dataset.id;
 			if(id !== null || id !== 'undefined')
 			{
-				fetch("https://restapitellierc.herokuapp.com/employees/" + id, {
+				fetch("/employees/" + id, {
 					method: 'delete'
 				})
 				.then(response => console.log(response))
@@ -251,7 +251,7 @@
 			}
 			formBody = formBody.join("&");
 
-			fetch('https://restapitellierc.herokuapp.com/employees/' + id, {
+			fetch('/employees/' + id, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -323,11 +323,11 @@
 			var url =null;
 			if(business == null)
 			{
-				url = "https://restapitellierc.herokuapp.com/employees";
+				url = "/employees";
 			}
 			else
 			{
-				url = "https://restapitellierc.herokuapp.com/" + business + "employees";
+				url = "/" + business + "employees";
 			}
 			fetch(url).then(function(response) {
 				response.json().then(function(json) {
