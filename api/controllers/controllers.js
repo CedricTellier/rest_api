@@ -8,6 +8,7 @@ exports.list_all_employees = function(req, res) {
 	Employees.find({},   function(err, employees) {
     if (err)
       res.send(err);
+      console.log(err);
     res.json(employees);
   });
 };
