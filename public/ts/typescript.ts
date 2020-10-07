@@ -1,11 +1,11 @@
 const HEROKU_URL:string = "https://restapitellierc.herokuapp.com/";
 const HEROKU_EMPLOYEE_URL:string = HEROKU_URL.concat("employees/");
 
-const REQ_HEADERS ={ 
+const REQ_HEADERS = { 
 	'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
 };
 
-const enum method{
+const enum method {
 	PUT = 'PUT',
 	POST = 'POST',
 	DELETE = 'DELETE'
@@ -36,8 +36,8 @@ function createNewEmployee()
 
 function deleteEmployee(row:HTMLTableRowElement)
 {
-	var id:string = row.dataset.id;
-	var business:string = JSON.parse(row.dataset.employee).business;
+	var id:string = row.dataset.id!;
+	var business:any = JSON.parse(row.dataset.employee!).business;
 	if(id !== null || id !== 'undefined')
 	{
 		fetch(HEROKU_EMPLOYEE_URL + id, {
@@ -51,7 +51,7 @@ function deleteEmployee(row:HTMLTableRowElement)
 
 function launchModify(row: HTMLTableRowElement)
 {
-	var json = JSON.parse(row.dataset.employee);
+	var json:any = JSON.parse(row.dataset.employee!);
 	(document.getElementById("employeeId") as HTMLInputElement).value = json._id;
 	(document.getElementById("firstnameModify") as HTMLInputElement).value = json.firstname;
 	(document.getElementById("lastnameModify") as HTMLInputElement).value = json.lastname;
@@ -64,18 +64,17 @@ function modifyEmployee()
 	var config = { 
 		'firstname' : (document.getElementById("firstnameModify") as HTMLInputElement).value, 
 		'lastname': (document.getElementById("lastnameModify") as HTMLInputElement).value, 
-		'business':(document.getElementById("businessModify")as HTMLSelectElement).options[(document.getElementById("businessModify") as HTMLSelectElement).selectedIndex].value 
+		'business':(document.getElementById("businessModify") as HTMLSelectElement).options[(document.getElementById("businessModify") as HTMLSelectElement).selectedIndex].value 
 	};
 	var bodyRequest = createBodyRequest(config);
-
-	fetch(HEROKU_EMPLOYEE_URL + id, {
-		method: method.PUT,
-		headers: REQ_HEADERS,	
+	fetch(HEROKU_EMPLOYEE_URL, {
+		method: method.POST,
+		headers: REQ_HEADERS,				
 		body: bodyRequest
 	})
 	.then(response => console.log(response))
-	.catch(error => console.log(error))
-		document.getElementById("cancelModify").click();
+	.catch(error => console.log(error));
+	(document.getElementById("cancelModify") as HTMLButtonElement).click();
 	getAllEmployees(config.business.concat("/"));
 }
 
@@ -83,9 +82,9 @@ function selectElement(id : string, valueToSelect: string) {
 	(document.getElementById(id) as HTMLInputElement).value = valueToSelect;
 }
 
-function getAllEmployees(business:string = null)
+function getAllEmployees(business:string = "")
 {
-	var url:string = null;
+	var url:string = "";
 	if(business == null)
 	{
 		url = HEROKU_EMPLOYEE_URL;
@@ -103,7 +102,6 @@ function getAllEmployees(business:string = null)
 	});
 }
 
-
 function clearTableVIew(table:HTMLTableElement)
 {
 	var tableHeaderRowCount:number = 1;
@@ -113,7 +111,7 @@ function clearTableVIew(table:HTMLTableElement)
 	}				
 }
 
-function populateTableView(table:HTMLTableElement, json)
+function populateTableView(table:HTMLTableElement, json:any)
 {
 	for(var i = 0; i < json.length; i++) {
 		var obj = json[i];
@@ -134,9 +132,9 @@ function populateTableView(table:HTMLTableElement, json)
 	}				
 }
 
-function createBodyRequest(config:Object)
+function createBodyRequest(config:any)
 {
-	var body;
+	var body:any;
 	for (var property in config) {
 		var encodedKey = encodeURIComponent(property);
 		var encodedValue = encodeURIComponent(config[property]);

@@ -9,7 +9,7 @@ module.exports = function(app) {
 
   app.route('/')
   .get(function(req, res, next){
-    res.sendFile(path.join(__dirname, '../../public', 'index.html'));  
+    res.sendFile(path.join(__dirname, '../../../', 'index.html'));  
   });
 
   // Routes
