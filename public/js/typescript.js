@@ -93,11 +93,32 @@ function populateTableView(table, json) {
     for (var i = 0; i < json.length; i++) {
         var obj = json[i];
         var row = table.insertRow(-1);
-        for (var j = 0; j < 6; j++) {
+        var json = JSON.parse(obj);
+        for (var j = 0; j < 7; j++) {
             var cell = row.insertCell(j);
             if (j < 6) {
-                console.log(obj);
-                var valueCell = document.createTextNode(obj[j]);
+                var value = "";
+                switch (j) {
+                    case 0:
+                        value = json.id;
+                        break;
+                    case 1:
+                        value = json.firstname;
+                        break;
+                    case 3:
+                        value = json.lastname;
+                        break;
+                    case 4:
+                        value = json.business;
+                        break;
+                    case 5:
+                        value = json.birth_date;
+                        break;
+                    case 6:
+                        value = json.created_date;
+                        break;
+                }
+                var valueCell = document.createTextNode(value);
                 cell.appendChild(valueCell);
             }
             else {
