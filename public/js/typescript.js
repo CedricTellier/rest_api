@@ -2,7 +2,8 @@
 var HEROKU_URL = "https://restapitellierc.herokuapp.com/";
 var HEROKU_EMPLOYEE_URL = HEROKU_URL.concat("employees/");
 var REQ_HEADERS = {
-    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Access-Control-Allow-Origin': '*'
 };
 ;
 function createNewEmployee() {
@@ -18,7 +19,7 @@ function createNewEmployee() {
     fetch(HEROKU_EMPLOYEE_URL, {
         method: "POST" /* POST */,
         headers: REQ_HEADERS,
-        body: formBody
+        body: formBody,
     })
         .then(function (response) { return console.log(response); })
         .catch(function (error) { return console.log(error); });
@@ -29,7 +30,7 @@ function deleteEmployee(row) {
     var business = JSON.parse(row.dataset.employee).business;
     if (id !== null || id !== 'undefined') {
         fetch(HEROKU_EMPLOYEE_URL + id, {
-            method: "DELETE" /* DELETE */
+            method: "DELETE" /* DELETE */,
         })
             .then(function (response) { return console.log(response); })
             .catch(function (error) { return console.log(error); });
@@ -54,7 +55,7 @@ function modifyEmployee() {
     fetch(HEROKU_EMPLOYEE_URL, {
         method: "POST" /* POST */,
         headers: REQ_HEADERS,
-        body: bodyRequest
+        body: bodyRequest,
     })
         .then(function (response) { return console.log(response); })
         .catch(function (error) { return console.log(error); });

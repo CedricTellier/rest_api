@@ -2,7 +2,8 @@ const HEROKU_URL:string = "https://restapitellierc.herokuapp.com/";
 const HEROKU_EMPLOYEE_URL:string = HEROKU_URL.concat("employees/");
 
 const REQ_HEADERS = { 
-	'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+	'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+	'Access-Control-Allow-Origin': '*'
 };
 
 const enum method {
@@ -27,7 +28,7 @@ function createNewEmployee()
 	fetch(HEROKU_EMPLOYEE_URL, {
 		method: method.POST,
 		headers: REQ_HEADERS,				
-		body: formBody
+		body: formBody,
 	})
 	.then(response => console.log(response))
 	.catch(error => console.log(error))
@@ -41,7 +42,7 @@ function deleteEmployee(row:HTMLTableRowElement)
 	if(id !== null || id !== 'undefined')
 	{
 		fetch(HEROKU_EMPLOYEE_URL + id, {
-			method: method.DELETE
+			method: method.DELETE,
 		})
 		.then(response => console.log(response))
 		.catch(error => console.log(error))
@@ -70,7 +71,7 @@ function modifyEmployee()
 	fetch(HEROKU_EMPLOYEE_URL, {
 		method: method.POST,
 		headers: REQ_HEADERS,				
-		body: bodyRequest
+		body: bodyRequest,
 	})
 	.then(response => console.log(response))
 	.catch(error => console.log(error));
