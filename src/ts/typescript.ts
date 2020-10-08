@@ -131,16 +131,16 @@ function populateTableView(table:HTMLTableElement, json:any)
 					case 1:
 						value = obj.firstname;
 						break;
-					case 3:						
+					case 2:						
 						value = obj.lastname;
 						break;
-					case 4:
+					case 3:
 						value = obj.business;
 						break;
-					case 5:
+					case 4:
 						value = obj.birth_date;
 						break;
-					case 6:
+					case 5:
 						value = obj.created_date;
 						break;
 				}
