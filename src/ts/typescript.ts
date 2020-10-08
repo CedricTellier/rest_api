@@ -117,7 +117,6 @@ function populateTableView(table:HTMLTableElement, json:any)
 	for(var i = 0; i < json.length; i++) {
 		var obj = json[i];
 		var row = table.insertRow(-1);
-		var json = JSON.parse(obj)
 		for (var j=0; j < 7; j++)
 		{
 			var cell = row.insertCell(j);
@@ -127,22 +126,22 @@ function populateTableView(table:HTMLTableElement, json:any)
 				switch(j)
 				{
 					case 0:
-						value = json.id;
+						value = obj.id;
 						break;
 					case 1:
-						value = json.firstname;
+						value = obj.firstname;
 						break;
 					case 3:						
-						value = json.lastname;
+						value = obj.lastname;
 						break;
 					case 4:
-						value = json.business;
+						value = obj.business;
 						break;
 					case 5:
-						value = json.birth_date;
+						value = obj.birth_date;
 						break;
 					case 6:
-						value = json.created_date;
+						value = obj.created_date;
 						break;
 				}
 				let valueCell = document.createTextNode(value);
@@ -150,7 +149,7 @@ function populateTableView(table:HTMLTableElement, json:any)
 			}	
 			else 
 			{
-				cell.innerHTML = '<a class="btn btn-warning" onclick="launchModify(this)" data-employee='+ JSON.stringify(obj) + ' role="button" data-toggle="modal" data-target="#modifyModal">Modify</a><a class="btn btn-danger" style="margin-left:10px" onclick="deleteEmployee(this)" data-id='+ obj._id +' role="button">Delete</a>';
+				cell.innerHTML = '<a class="btn btn-warning" onclick="launchModify(this)" data-employee='+ obj + ' role="button" data-toggle="modal" data-target="#modifyModal">Modify</a><a class="btn btn-danger" style="margin-left:10px" onclick="deleteEmployee(this)" data-id='+ obj._id +' role="button">Delete</a>';
 			}	
 		}				
 	}				
