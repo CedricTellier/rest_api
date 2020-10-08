@@ -117,13 +117,14 @@ function populateTableView(table:HTMLTableElement, json:any)
 	for(var i = 0; i < json.length; i++) {
 		var obj = json[i];
 		var row = table.insertRow(-1);
-		for (var j=0; j < 6; j++)
+		var json = JSON.parse(obj)
+		for (var j=0; j < 7; j++)
 		{
 			var cell = row.insertCell(j);
 			if(j < 6)
 			{
 				console.log(obj);
-				let valueCell = document.createTextNode(obj[j]);
+				let valueCell = document.createTextNode(json[j]);
 				cell.appendChild(valueCell);
 			}	
 			else 
