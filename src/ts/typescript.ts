@@ -120,7 +120,7 @@ function populateTableView(table:HTMLTableElement, json:any)
 		for (var j=0; j < 6; j++)
 		{
 			var cell = row.insertCell(j);
-			if(j > 6)
+			if(j < 6)
 			{
 				let valueCell = document.createTextNode(obj.selectedIndex(j));
 				cell.appendChild(valueCell);
