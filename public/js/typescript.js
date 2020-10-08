@@ -96,7 +96,8 @@ function populateTableView(table, json) {
         for (var j = 0; j < 6; j++) {
             var cell = row.insertCell(j);
             if (j < 6) {
-                var valueCell = document.createTextNode(obj.selectedIndex(j));
+                console.log(obj);
+                var valueCell = document.createTextNode(obj[j]);
                 cell.appendChild(valueCell);
             }
             else {
