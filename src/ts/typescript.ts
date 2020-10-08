@@ -122,9 +122,30 @@ function populateTableView(table:HTMLTableElement, json:any)
 		{
 			var cell = row.insertCell(j);
 			if(j < 6)
-			{
-				console.log(obj);
-				let valueCell = document.createTextNode(json[j]);
+			{					
+				var value= "";
+				switch(j)
+				{
+					case 0:
+						value = json.id;
+						break;
+					case 1:
+						value = json.firstname;
+						break;
+					case 3:						
+						value = json.lastname;
+						break;
+					case 4:
+						value = json.business;
+						break;
+					case 5:
+						value = json.birth_date;
+						break;
+					case 6:
+						value = json.created_date;
+						break;
+				}
+				let valueCell = document.createTextNode(value);
 				cell.appendChild(valueCell);
 			}	
 			else 
