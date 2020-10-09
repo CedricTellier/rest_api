@@ -14,16 +14,14 @@ const enum method {
 
 function createNewEmployee()
 {
-	let config = {
-		'lastname': (document.getElementById("lastname") as HTMLInputElement).value,
-		'firstname': (document.getElementById("firstname") as HTMLInputElement).value,
-		'business': (document.getElementById("business") as HTMLSelectElement).options[(document.getElementById("business")as HTMLSelectElement).selectedIndex].value 
-	};
-	if(!config.business.length || !config.lastname.length)
+	var business = (document.getElementById("business") as HTMLSelectElement).options[(document.getElementById("business")as HTMLSelectElement).selectedIndex].value;
+	var lastname = (document.getElementById("lastname") as HTMLInputElement).value;
+	if(!business.length || !lastname.length)
 	{
 		return alert('Le prénom ou le nom de famille est manquant, merci de la compléter!');
 	}
-	var formData = new FormData(document.getElementById('login-form') as HTMLFormElement);
+	business+=+ "/";
+	var formData = new FormData(document.getElementById('form-create') as HTMLFormElement);
 	fetch(HEROKU_EMPLOYEE_URL, {
 		method: method.POST,
 		headers: REQ_HEADERS,				
@@ -31,7 +29,7 @@ function createNewEmployee()
 	})
 	.then(response => console.log(response))
 	.catch(error => console.log(error))
-	getAllEmployees(config.business.concat("/"));
+	getAllEmployees(business);
 }
 
 function deleteEmployee(row:HTMLTableRowElement)
@@ -60,22 +58,17 @@ function launchModify(row: HTMLTableRowElement)
 
 function modifyEmployee()
 {
-	var id = (document.getElementById("employeeId") as HTMLInputElement).value;
-	var config = { 
-		'firstname' : (document.getElementById("firstnameModify") as HTMLInputElement).value, 
-		'lastname': (document.getElementById("lastnameModify") as HTMLInputElement).value, 
-		'business':(document.getElementById("businessModify") as HTMLSelectElement).options[(document.getElementById("businessModify") as HTMLSelectElement).selectedIndex].value 
-	};
-	var bodyRequest = createBodyRequest(config);
+	var business = (document.getElementById("businessModify") as HTMLSelectElement).options[(document.getElementById("businessModify") as HTMLSelectElement).selectedIndex].value + "/";
+	var formData = new FormData(document.getElementById('form-modify') as HTMLFormElement);
 	fetch(HEROKU_EMPLOYEE_URL, {
 		method: method.POST,
 		headers: REQ_HEADERS,				
-		body: bodyRequest,
+		body: formData,
 	})
 	.then(response => console.log(response))
 	.catch(error => console.log(error));
 	(document.getElementById("cancelModify") as HTMLButtonElement).click();
-	getAllEmployees(config.business.concat("/"));
+	getAllEmployees(business);
 }
 
 function selectElement(id : string, valueToSelect: string) {    
@@ -149,19 +142,8 @@ function populateTableView(table:HTMLTableElement, json:any)
 			}	
 			else 
 			{
-				cell.innerHTML = '<a class="btn btn-warning" onclick="launchModify(this)" data-employee='+ obj + ' role="button" data-toggle="modal" data-target="#modifyModal">Modify</a><a class="btn btn-danger" style="margin-left:10px" onclick="deleteEmployee(this)" data-id='+ obj._id +' role="button">Delete</a>';
+				cell.innerHTML = '<a class="btn btn-warning" onclick="launchModify(this)" data-employee="' + obj + '" role="button" data-toggle="modal" data-target="#modifyModal">Modify</a><a class="btn btn-danger" style="margin-left:10px" onclick="deleteEmployee(this)" data-id='+ obj._id +' role="button">Delete</a>';
 			}	
 		}				
 	}				
 }
-
-function createBodyRequest(config:any)
-{
-	var tmp:string = "";
-	for (var property in config) {
-		console.log(property + " + " + config[property]);
-		tmp +=(property + "=" + config[property] + "&");
-	};
-	var body = tmp.slice(0, -1);
-	return body;
-};

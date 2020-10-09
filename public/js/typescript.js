@@ -7,15 +7,13 @@ var REQ_HEADERS = {
 };
 ;
 function createNewEmployee() {
-    var config = {
-        'lastname': document.getElementById("lastname").value,
-        'firstname': document.getElementById("firstname").value,
-        'business': document.getElementById("business").options[document.getElementById("business").selectedIndex].value
-    };
-    if (!config.business.length || !config.lastname.length) {
+    var business = document.getElementById("business").options[document.getElementById("business").selectedIndex].value;
+    var lastname = document.getElementById("lastname").value;
+    if (!business.length || !lastname.length) {
         return alert('Le prénom ou le nom de famille est manquant, merci de la compléter!');
     }
-    var formData = new FormData(document.getElementById('login-form'));
+    business += +"/";
+    var formData = new FormData(document.getElementById('form-create'));
     fetch(HEROKU_EMPLOYEE_URL, {
         method: "POST" /* POST */,
         headers: REQ_HEADERS,
@@ -23,7 +21,7 @@ function createNewEmployee() {
     })
         .then(function (response) { return console.log(response); })
         .catch(function (error) { return console.log(error); });
-    getAllEmployees(config.business.concat("/"));
+    getAllEmployees(business);
 }
 function deleteEmployee(row) {
     var id = row.dataset.id;
@@ -45,22 +43,17 @@ function launchModify(row) {
     selectElement("businessModify", json.business);
 }
 function modifyEmployee() {
-    var id = document.getElementById("employeeId").value;
-    var config = {
-        'firstname': document.getElementById("firstnameModify").value,
-        'lastname': document.getElementById("lastnameModify").value,
-        'business': document.getElementById("businessModify").options[document.getElementById("businessModify").selectedIndex].value
-    };
-    var bodyRequest = createBodyRequest(config);
+    var business = document.getElementById("businessModify").options[document.getElementById("businessModify").selectedIndex].value + "/";
+    var formData = new FormData(document.getElementById('form-modify'));
     fetch(HEROKU_EMPLOYEE_URL, {
         method: "POST" /* POST */,
         headers: REQ_HEADERS,
-        body: bodyRequest,
+        body: formData,
     })
         .then(function (response) { return console.log(response); })
         .catch(function (error) { return console.log(error); });
     document.getElementById("cancelModify").click();
-    getAllEmployees(config.business.concat("/"));
+    getAllEmployees(business);
 }
 function selectElement(id, valueToSelect) {
     document.getElementById(id).value = valueToSelect;
@@ -122,19 +115,8 @@ function populateTableView(table, json) {
                 cell.appendChild(valueCell);
             }
             else {
-                cell.innerHTML = '<a class="btn btn-warning" onclick="launchModify(this)" data-employee=' + obj + ' role="button" data-toggle="modal" data-target="#modifyModal">Modify</a><a class="btn btn-danger" style="margin-left:10px" onclick="deleteEmployee(this)" data-id=' + obj._id + ' role="button">Delete</a>';
+                cell.innerHTML = '<a class="btn btn-warning" onclick="launchModify(this)" data-employee="' + obj + '" role="button" data-toggle="modal" data-target="#modifyModal">Modify</a><a class="btn btn-danger" style="margin-left:10px" onclick="deleteEmployee(this)" data-id=' + obj._id + ' role="button">Delete</a>';
             }
         }
     }
 }
-function createBodyRequest(config) {
-    var tmp = "";
-    for (var property in config) {
-        console.log(property + " + " + config[property]);
-        tmp += (property + "=" + config[property] + "&");
-    }
-    ;
-    var body = tmp.slice(0, -1);
-    return body;
-}
-;

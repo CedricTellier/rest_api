@@ -71,7 +71,7 @@
 		<h2 style="margin-top:50px;">Create an Employee</h2>
 		<div class="row" style="margin-top:25px;">
 			<div class="col-6">
-				<form id="login-form">
+				<form id="form-create">
 					<div class="form-group">
 						<label for="firstname">First Name</label>
 						<input type="text" class="form-control" id="firstname" placeholder="Enter a Firstname" required>
@@ -107,6 +107,7 @@
 						</button>
 					</div>
 					<div class="modal-body">
+						<form id="form-modify">
 						<div class="form-group">
 							<label for="">Employee Id</label>
 							<input type="text" class="form-control" id="employeeId" disabled>
@@ -130,6 +131,7 @@
 								<option value="Capture4cad">Capture4Cad</option>
 							</select>
 						</div>
+						</form>
 					</div>
 					<div class="modal-footer">
 						<button id="cancelModify" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
