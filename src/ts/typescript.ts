@@ -23,12 +23,11 @@ function createNewEmployee()
 	{
 		return alert('Le prénom ou le nom de famille est manquant, merci de la compléter!');
 	}
-	var formBody = createBodyRequest(config);
-	
+	var formData = new FormData(document.getElementById('login-form') as HTMLFormElement);
 	fetch(HEROKU_EMPLOYEE_URL, {
 		method: method.POST,
 		headers: REQ_HEADERS,				
-		body: formBody,
+		body: formData,
 	})
 	.then(response => console.log(response))
 	.catch(error => console.log(error))
@@ -96,6 +95,7 @@ function getAllEmployees(business:string = "")
 	}
 	fetch(url).then(function(response) {
 		response.json().then(function(json) {
+			console.log(json);
 			var table = (document.getElementById("mytTable")) as HTMLTableElement;
 			clearTableVIew(table);
 			populateTableView(table, json);
@@ -157,12 +157,11 @@ function populateTableView(table:HTMLTableElement, json:any)
 
 function createBodyRequest(config:any)
 {
-	var body:any;
+	var tmp:string = "";
 	for (var property in config) {
-		var encodedKey = encodeURIComponent(property);
-		var encodedValue = encodeURIComponent(config[property]);
-		body.push(encodedKey + "=" + encodedValue);
-	}
-	body = body.join("&");
-	return body
+		console.log(property + " + " + config[property]);
+		tmp +=(property + "=" + config[property] + "&");
+	};
+	var body = tmp.slice(0, -1);
+	return body;
 };
