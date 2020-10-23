@@ -15,6 +15,7 @@ mongoose.connect('mongodb+srv://caddev_user:o2kkHvBPppkyeW5z@caddev.w8pl8.mongod
 
 app.use(cors());
 app.options('*', cors())
+app.use('/favicon.ico', express.static('public/favicon.ico'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
