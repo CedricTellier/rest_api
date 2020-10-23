@@ -1,128 +1,86 @@
 <!doctype html>
 <html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="icon" href="http://localhost:3000/images/favicon.ico">
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+			integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-<head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="icon" href="http://localhost:3000/images/favicon.ico">
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-	<title>Rest API Caddev</title>
-	<style type="text/css">
-		td,
-		tr {
-			text-align: center;
-		}
-	</style>
-</head>
-
-<body>
-	<h1 style="text-align: center;">
-		Rest API Caddev
-	</h1>
-	<div style="margin-left: 50px;margin-right:50px">
-		<h2 style="margin-top:50px;">Get Employees</h2>
-		<div class="row" style="margin-top:25px;">
-			<div class="col-2">
-				<a class="btn btn-primary" onclick="getAllEmployees()" role="button">All Employees</a>
+		<title>Rest API Caddev</title>
+		<style type="text/css">
+			td,
+			tr {
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<h1 style="text-align: center;">
+			Rest API Caddev
+		</h1>
+		<div style="margin-left: 50px;margin-right:50px">
+			<h2 style="margin-top:50px;">Get Employees</h2>
+			<div class="row" style="margin-top:25px;">
+				<div class="col-2">
+					<a class="btn btn-primary" onclick="getAllEmployees()" role="button">All Employees</a>
+				</div>
+				<div class="col-1">
+					<a class="btn btn-secondary" onclick="getAllEmployees('Caddev/')" role="button">Caddev</a>
+				</div>
+				<div class="col-1">
+					<a class="btn btn-success" onclick="getAllEmployees('Cadcom/')" role="button">Cadcom</a>
+				</div>
+				<div class="col-2">
+					<a class="btn btn-danger" onclick="getAllEmployees('Capture4cad/')" role="button">Capture4Cad</a>
+				</div>
+				<div class="col-2">
+					<a class="btn btn-warning" onclick="getAllEmployees('CadworkSA/')" role="button">Cadwork SA</a>
+				</div>
+				<div class="col-2">
+					<a class="btn btn-secondary" onclick="getAllEmployees('Cadwork/')" role="button">Cadwork France</a>
+				</div>
+				<div class="col-1">
+					<a class="btn btn-info" onclick="getAllEmployees('Cadskills/')" role="button">CadSkills</a>
+				</div>
 			</div>
-			<div class="col-2">
-				<a class="btn btn-secondary" onclick="getAllEmployees('Caddev/')" role="button">Caddev's Employees</a>
+			<div style="margin-top:25px;">
+				<table class="table table-dark" id='mytTable'>
+					<thead>
+						<tr>
+							<th scope="col">Id</th>
+							<th scope="col">Firstname</th>
+							<th scope="col">LastName</th>
+							<th scope="col">Company</th>
+							<th scope="col">Birth Date</th>
+							<th scope="col">Creation Date</th>
+							<th scope="col">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr id='myTd'>
+							<td colspan="6">No Values</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
-			<div class="col-2">
-				<a class="btn btn-success" onclick="getAllEmployees('Cadcom/')" role="button">Cadcom's Employees</a>
-			</div>
-			<div class="col-2">
-				<a class="btn btn-danger" onclick="getAllEmployees('Capture4cad/')" role="button">Capture4Cad's Employees</a>
-			</div>
-			<div class="col-2">
-				<a class="btn btn-warning" onclick="getAllEmployees('CadworkSA/')" role="button">Cadwork SA's Employees</a>
-			</div>
-			<div class="col-2">
-				<a class="btn btn-secondary" onclick="getAllEmployees('Cadwork/')" role="button">Cadwork France's Employees</a>
-			</div>
-			<div class="col-2">
-				<a class="btn btn-info" onclick="getAllEmployees('Cadskills/')" role="button">CadSkills Employees</a>
-			</div>
-		</div>
-		<div style="margin-top:25px;">
-			<table class="table table-dark" id='mytTable'>
-				<thead>
-					<tr>
-						<th scope="col">Id</th>
-						<th scope="col">Firstname</th>
-						<th scope="col">LastName</th>
-						<th scope="col">Company</th>
-						<th scope="col">Birth Date</th>
-						<th scope="col">Creation Date</th>
-						<th scope="col">Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr id='myTd'>
-						<td colspan="6">No Values</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<h2 style="margin-top:50px;">Create an Employee</h2>
-		<div class="row" style="margin-top:25px;">
-			<div class="col-6">
-				<form id="form-create">
-					<div class="form-group">
-						<label for="firstname">First Name</label>
-						<input type="text" class="form-control" id="firstname" placeholder="Enter a Firstname" required>
-					</div>
-					<div class="form-group">
-						<label for="lastname">Last Name</label>
-						<input type="text" class="form-control" id="lastname" placeholder="Enter a Lastname" required>
-					</div>
-					<div class="form-group">
-						<label for="business">Select a Company</label>
-						<select class="form-control" id="business">
-							<option value="Caddev">Caddev</option>
-							<option value="CadworkSA">Cadwork SA</option>
-							<option value="Cadwork">Cadwork France</option>
-							<option value="Cadcom">Cadcom</option>
-							<option value="Cadskills">Cadskills</option>
-							<option value="Capture4cad">Capture4Cad</option>
-						</select>
-					</div>
-					<a type="submit" class="btn btn-primary" onclick="createNewEmployee()" role="button">Create</a>
-				</form>
-			</div>
-			<div class="col-6"></div>
-		</div>
-		<!-- Modal -->
-		<div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="modifyLabel">Modify an Employee</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<form id="form-modify">
+			<h2 style="margin-top:50px;">Create an Employee</h2>
+			<div class="row" style="margin-top:25px;">
+				<div class="col-6">
+					<form id="form-create" method="post">
 						<div class="form-group">
-							<label for="">Employee Id</label>
-							<input type="text" class="form-control" id="employeeId" disabled>
+							<label for="firstname">First Name</label>
+							<input type="text" class="form-control" id="firstname" placeholder="Enter a Firstname" required name="firstname">
 						</div>
 						<div class="form-group">
-							<label for="firstnameModify">First Name</label>
-							<input type="text" class="form-control" id="firstnameModify" placeholder="Enter a Firstname" required>
+							<label for="lastname">Last Name</label>
+							<input type="text" class="form-control" id="lastname" placeholder="Enter a Lastname" required name="lastname">
 						</div>
 						<div class="form-group">
-							<label for="lastnameModify">Last Name</label>
-							<input type="text" class="form-control" id="lastnameModify" placeholder="Enter a Lastname" required>
-						</div>
-						<div class="form-group">
-							<label for="businessModify">Select a Company</label>
-							<select class="form-control" id="businessModify">
+							<label for="business">Select a Company</label>
+							<select class="form-control" id="business" name="business">
 								<option value="Caddev">Caddev</option>
 								<option value="CadworkSA">Cadwork SA</option>
 								<option value="Cadwork">Cadwork France</option>
@@ -131,24 +89,65 @@
 								<option value="Capture4cad">Capture4Cad</option>
 							</select>
 						</div>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<button id="cancelModify" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary" onclick="modifyEmployee()">Save</button>
+						<a type="submit" class="btn btn-primary" onclick="createNewEmployee()" role="button">Create</a>
+					</form>
+				</div>
+				<div class="col-6"></div>
+			</div>
+			<!-- Modal -->
+			<div class="modal fade" id="modifyModal" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="modifyLabel">Modify an Employee</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<form id="form-modify">
+								<div class="form-group">
+									<label for="">Employee Id</label>
+									<input type="text" class="form-control" id="employeeId" disabled name="_id">
+								</div>
+								<div class="form-group">
+									<label for="firstnameModify">First Name</label>
+									<input type="text" class="form-control" id="firstnameModify" placeholder="Enter a Firstname" name="firstname" required>
+								</div>
+								<div class="form-group">
+									<label for="lastnameModify">Last Name</label>
+									<input type="text" class="form-control" id="lastnameModify" placeholder="Enter a Lastname" name="lastname" required>
+								</div>
+								<div class="form-group">
+									<label for="businessModify">Select a Company</label>
+									<select class="form-control" id="businessModify" name="business">
+										<option value="Caddev">Caddev</option>
+										<option value="CadworkSA">Cadwork SA</option>
+										<option value="Cadwork">Cadwork France</option>
+										<option value="Cadcom">Cadcom</option>
+										<option value="Cadskills">Cadskills</option>
+										<option value="Capture4cad">Capture4Cad</option>
+									</select>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button id="cancelModify" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+							<button type="button" class="btn btn-primary" onclick="modifyEmployee()">Save</button>
+						</div>
 					</div>
 				</div>
+				<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+					integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+					crossorigin="anonymous"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+					integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+					crossorigin="anonymous"></script>
+				<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+					integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+					crossorigin="anonymous"></script>
+				<script type="text/javascript" src="http://localhost:3000/js/typescript.js"></script>
 			</div>
-			<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-				integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-				crossorigin="anonymous"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-				integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-				crossorigin="anonymous"></script>
-			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-				integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-				crossorigin="anonymous"></script>
-			<script type="text/javascript" src="http://localhost:3000/js/typescript.js"></script>
-</body>
-
+		</div>
+	</body>
 </html>

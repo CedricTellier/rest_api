@@ -1,4 +1,6 @@
-const HEROKU_URL:string = "https://restapitellierc.herokuapp.com/";
+// const HEROKU_URL:string = "https://restapitellierc.herokuapp.com/";
+const HEROKU_URL:string = "http://localhost:3000/";
+
 const HEROKU_EMPLOYEE_URL:string = HEROKU_URL.concat("employees/");
 
 const REQ_HEADERS = { 
@@ -20,22 +22,22 @@ function createNewEmployee()
 	{
 		return alert('Le prénom ou le nom de famille est manquant, merci de la compléter!');
 	}
-	business+=+ "/";
+	business+= "/";
 	var formData = new FormData(document.getElementById('form-create') as HTMLFormElement);
 	fetch(HEROKU_EMPLOYEE_URL, {
 		method: method.POST,
 		headers: REQ_HEADERS,				
-		body: formData,
+		body: formData
 	})
 	.then(response => console.log(response))
 	.catch(error => console.log(error))
 	getAllEmployees(business);
 }
 
-function deleteEmployee(row:HTMLTableRowElement)
+function deleteEmployee(row: HTMLTableRowElement)
 {
 	var id:string = row.dataset.id!;
-	var business:any = JSON.parse(row.dataset.employee!).business;
+	var business:string = row.dataset.business!;
 	if(id !== null || id !== 'undefined')
 	{
 		fetch(HEROKU_EMPLOYEE_URL + id, {
@@ -58,12 +60,14 @@ function launchModify(row: HTMLTableRowElement)
 
 function modifyEmployee()
 {
-	var business = (document.getElementById("businessModify") as HTMLSelectElement).options[(document.getElementById("businessModify") as HTMLSelectElement).selectedIndex].value + "/";
-	var formData = new FormData(document.getElementById('form-modify') as HTMLFormElement);
-	fetch(HEROKU_EMPLOYEE_URL, {
-		method: method.POST,
+	var id = (document.getElementById('employeeId') as HTMLInputElement).value;
+	var business = (document.getElementById("businessModify") as HTMLSelectElement).options[(document.getElementById("businessModify") as HTMLSelectElement).selectedIndex].value;
+	var formData:any = new FormData(document.getElementById('form-modify') as HTMLFormElement);
+	business += "/";
+	fetch(HEROKU_EMPLOYEE_URL.concat(id), {
+		method: method.PUT,
 		headers: REQ_HEADERS,				
-		body: formData,
+		body: formData
 	})
 	.then(response => console.log(response))
 	.catch(error => console.log(error));
@@ -77,18 +81,12 @@ function selectElement(id : string, valueToSelect: string) {
 
 function getAllEmployees(business:string = "")
 {
-	var url:string = "";
-	if(business == null)
-	{
-		url = HEROKU_EMPLOYEE_URL;
-	}
-	else
-	{
+	var url = HEROKU_EMPLOYEE_URL;
+	if (business != null) {
 		url = HEROKU_URL + business + "employees";
 	}
 	fetch(url).then(function(response) {
 		response.json().then(function(json) {
-			console.log(json);
 			var table = (document.getElementById("mytTable")) as HTMLTableElement;
 			clearTableVIew(table);
 			populateTableView(table, json);
@@ -98,10 +96,9 @@ function getAllEmployees(business:string = "")
 
 function clearTableVIew(table:HTMLTableElement)
 {
-	var tableHeaderRowCount:number = 1;
 	var rowCount:number = table.rows.length;
-	for (var i = tableHeaderRowCount; i < rowCount; i++) {
-		table.deleteRow(tableHeaderRowCount);
+	for (var i = 1; i < rowCount; i++) {
+		table.deleteRow(1);
 	}				
 }
 
@@ -142,7 +139,7 @@ function populateTableView(table:HTMLTableElement, json:any)
 			}	
 			else 
 			{
-				cell.innerHTML = '<a class="btn btn-warning" onclick="launchModify(this)" data-employee="' + obj + '" role="button" data-toggle="modal" data-target="#modifyModal">Modify</a><a class="btn btn-danger" style="margin-left:10px" onclick="deleteEmployee(this)" data-id='+ obj._id +' role="button">Delete</a>';
+				cell.innerHTML = '<a class="btn btn-warning" onclick="launchModify(this)" data-employee=' + JSON.stringify(obj) + ' role="button" data-toggle="modal" data-target="#modifyModal">Modify</a><a class="btn btn-danger" style="margin-left:10px" onclick="deleteEmployee(this)" data-id='+ obj._id +' data-business=' + obj.business + ' role="button">Delete</a>';
 			}	
 		}				
 	}				
