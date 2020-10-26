@@ -1,10 +1,9 @@
 // const HEROKU_URL:string = "https://restapitellierc.herokuapp.com/";
 const HEROKU_URL:string = "http://localhost:3000/";
-
 const HEROKU_EMPLOYEE_URL:string = HEROKU_URL.concat("employees/");
-
 const REQ_HEADERS = { 
-	'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+	'Accept': 'application/json',
+	'Content-Type': 'application/json;charset=UTF-8',
 	'Access-Control-Allow-Origin': '*'
 };
 
@@ -22,15 +21,19 @@ function createNewEmployee()
 	{
 		return alert('Le prénom ou le nom de famille est manquant, merci de la compléter!');
 	}
-	business+= "/";
-	var formData = new FormData(document.getElementById('form-create') as HTMLFormElement);
+	var jsonData = {
+		firstname:(document.getElementById("firstname") as HTMLInputElement).value,
+		lastname: lastname,
+		business: business
+	}
 	fetch(HEROKU_EMPLOYEE_URL, {
 		method: method.POST,
 		headers: REQ_HEADERS,				
-		body: formData
+		body: JSON.stringify(jsonData)
 	})
 	.then(response => console.log(response))
 	.catch(error => console.log(error))
+	business+= "/";
 	getAllEmployees(business);
 }
 
@@ -61,17 +64,21 @@ function launchModify(row: HTMLTableRowElement)
 function modifyEmployee()
 {
 	var id = (document.getElementById('employeeId') as HTMLInputElement).value;
-	var business = (document.getElementById("businessModify") as HTMLSelectElement).options[(document.getElementById("businessModify") as HTMLSelectElement).selectedIndex].value;
-	var formData:any = new FormData(document.getElementById('form-modify') as HTMLFormElement);
-	business += "/";
+	var business = (document.getElementById("businessModify") as HTMLSelectElement).options[(document.getElementById("businessModify")as HTMLSelectElement).selectedIndex].value;
+	var jsonData = {
+		firstname:(document.getElementById("firstnameModify") as HTMLInputElement).value,
+		lastname: (document.getElementById("lastnameModify") as HTMLInputElement).value,
+		business:business
+	}
 	fetch(HEROKU_EMPLOYEE_URL.concat(id), {
 		method: method.PUT,
 		headers: REQ_HEADERS,				
-		body: formData
+		body: JSON.stringify(jsonData)
 	})
 	.then(response => console.log(response))
 	.catch(error => console.log(error));
 	(document.getElementById("cancelModify") as HTMLButtonElement).click();
+	business += "/";
 	getAllEmployees(business);
 }
 

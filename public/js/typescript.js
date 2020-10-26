@@ -3,7 +3,8 @@
 var HEROKU_URL = "http://localhost:3000/";
 var HEROKU_EMPLOYEE_URL = HEROKU_URL.concat("employees/");
 var REQ_HEADERS = {
-    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json;charset=UTF-8',
     'Access-Control-Allow-Origin': '*'
 };
 ;
@@ -13,15 +14,19 @@ function createNewEmployee() {
     if (!business.length || !lastname.length) {
         return alert('Le prénom ou le nom de famille est manquant, merci de la compléter!');
     }
-    business += "/";
-    var formData = new FormData(document.getElementById('form-create'));
+    var jsonData = {
+        firstname: document.getElementById("firstname").value,
+        lastname: lastname,
+        business: business
+    };
     fetch(HEROKU_EMPLOYEE_URL, {
         method: "POST" /* POST */,
         headers: REQ_HEADERS,
-        body: formData,
+        body: JSON.stringify(jsonData)
     })
         .then(function (response) { return console.log(response); })
         .catch(function (error) { return console.log(error); });
+    business += "/";
     getAllEmployees(business);
 }
 function deleteEmployee(row) {
@@ -46,16 +51,20 @@ function launchModify(row) {
 function modifyEmployee() {
     var id = document.getElementById('employeeId').value;
     var business = document.getElementById("businessModify").options[document.getElementById("businessModify").selectedIndex].value;
-    var formData = new FormData(document.getElementById('form-modify'));
-    business += "/";
+    var jsonData = {
+        firstname: document.getElementById("firstnameModify").value,
+        lastname: document.getElementById("lastnameModify").value,
+        business: business
+    };
     fetch(HEROKU_EMPLOYEE_URL.concat(id), {
         method: "PUT" /* PUT */,
         headers: REQ_HEADERS,
-        body: formData,
+        body: JSON.stringify(jsonData)
     })
         .then(function (response) { return console.log(response); })
         .catch(function (error) { return console.log(error); });
     document.getElementById("cancelModify").click();
+    business += "/";
     getAllEmployees(business);
 }
 function selectElement(id, valueToSelect) {

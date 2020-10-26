@@ -14,7 +14,13 @@ exports.list_all_employees = function(req, res) {
 
 exports.create_an_employee = function(req, res) {
   console.log(req.body);
-  var new_employee = new Employees(req.body);
+  console.log(req.body.firstname);
+
+  var new_employee = new Employees({
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    business: req.body.business
+  });
   new_employee.save(function(err, employee) {
     if (err)
       res.send(err);

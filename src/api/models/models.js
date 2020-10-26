@@ -2,11 +2,9 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-
 var EmployeesSchema = new Schema({
   id: {
     type: String,
-    required: true, 
     unique: true, 
     index: true, 
     default: mongoose.Types.ObjectId 
