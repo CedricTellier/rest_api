@@ -1,5 +1,5 @@
-// const HEROKU_URL:string = "https://restapitellierc.herokuapp.com/";
-const HEROKU_URL:string = "http://localhost:3000/";
+ const HEROKU_URL:string = "https://restapitellierc.herokuapp.com/";
+//const HEROKU_URL:string = "http://localhost:3000/";
 const HEROKU_EMPLOYEE_URL:string = HEROKU_URL.concat("employees/");
 const REQ_HEADERS = { 
 	'Accept': 'application/json',
