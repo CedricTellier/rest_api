@@ -13,11 +13,19 @@ exports.list_all_employees = function(req, res) {
 };
 
 exports.create_an_employee = function(req, res) {
-  var new_employee = new Employees(req.body);
+  console.log(req.body);
+  console.log(req.body.firstname);
+
+  var new_employee = new Employees({
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    business: req.body.business
+  });
   new_employee.save(function(err, employee) {
     if (err)
       res.send(err);
     res.json(employee);
+    console.log(employee);
   });
 };
 
@@ -30,9 +38,11 @@ exports.read_an_employee = function(req, res) {
 };
 
 exports.update_an_employee = function(req, res) {
-	Employees.useFindAndModify({_id: req.params._id},  req.body, {new: true}, function(err, employee) {
+  console.log(req.body);
+	Employees.findOneAndUpdate({_id: req.params._id},  req.body,{new: true}, function(err, employee) {
     if (err)
       res.send(err);
+    console.log(employee);
     res.json(employee);
   });
 };

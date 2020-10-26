@@ -1,8 +1,10 @@
 "use strict";
-var HEROKU_URL = "https://restapitellierc.herokuapp.com/";
+// const HEROKU_URL:string = "https://restapitellierc.herokuapp.com/";
+var HEROKU_URL = "http://localhost:3000/";
 var HEROKU_EMPLOYEE_URL = HEROKU_URL.concat("employees/");
 var REQ_HEADERS = {
-    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json;charset=UTF-8',
     'Access-Control-Allow-Origin': '*'
 };
 ;
@@ -12,20 +14,24 @@ function createNewEmployee() {
     if (!business.length || !lastname.length) {
         return alert('Le prénom ou le nom de famille est manquant, merci de la compléter!');
     }
-    business += +"/";
-    var formData = new FormData(document.getElementById('form-create'));
+    var jsonData = {
+        firstname: document.getElementById("firstname").value,
+        lastname: lastname,
+        business: business
+    };
     fetch(HEROKU_EMPLOYEE_URL, {
         method: "POST" /* POST */,
         headers: REQ_HEADERS,
-        body: formData,
+        body: JSON.stringify(jsonData)
     })
         .then(function (response) { return console.log(response); })
         .catch(function (error) { return console.log(error); });
+    business += "/";
     getAllEmployees(business);
 }
 function deleteEmployee(row) {
     var id = row.dataset.id;
-    var business = JSON.parse(row.dataset.employee).business;
+    var business = row.dataset.business;
     if (id !== null || id !== 'undefined') {
         fetch(HEROKU_EMPLOYEE_URL + id, {
             method: "DELETE" /* DELETE */,
@@ -43,16 +49,22 @@ function launchModify(row) {
     selectElement("businessModify", json.business);
 }
 function modifyEmployee() {
-    var business = document.getElementById("businessModify").options[document.getElementById("businessModify").selectedIndex].value + "/";
-    var formData = new FormData(document.getElementById('form-modify'));
-    fetch(HEROKU_EMPLOYEE_URL, {
-        method: "POST" /* POST */,
+    var id = document.getElementById('employeeId').value;
+    var business = document.getElementById("businessModify").options[document.getElementById("businessModify").selectedIndex].value;
+    var jsonData = {
+        firstname: document.getElementById("firstnameModify").value,
+        lastname: document.getElementById("lastnameModify").value,
+        business: business
+    };
+    fetch(HEROKU_EMPLOYEE_URL.concat(id), {
+        method: "PUT" /* PUT */,
         headers: REQ_HEADERS,
-        body: formData,
+        body: JSON.stringify(jsonData)
     })
         .then(function (response) { return console.log(response); })
         .catch(function (error) { return console.log(error); });
     document.getElementById("cancelModify").click();
+    business += "/";
     getAllEmployees(business);
 }
 function selectElement(id, valueToSelect) {
@@ -60,16 +72,12 @@ function selectElement(id, valueToSelect) {
 }
 function getAllEmployees(business) {
     if (business === void 0) { business = ""; }
-    var url = "";
-    if (business == null) {
-        url = HEROKU_EMPLOYEE_URL;
-    }
-    else {
+    var url = HEROKU_EMPLOYEE_URL;
+    if (business != null) {
         url = HEROKU_URL + business + "employees";
     }
     fetch(url).then(function (response) {
         response.json().then(function (json) {
-            console.log(json);
             var table = (document.getElementById("mytTable"));
             clearTableVIew(table);
             populateTableView(table, json);
@@ -77,10 +85,9 @@ function getAllEmployees(business) {
     });
 }
 function clearTableVIew(table) {
-    var tableHeaderRowCount = 1;
     var rowCount = table.rows.length;
-    for (var i = tableHeaderRowCount; i < rowCount; i++) {
-        table.deleteRow(tableHeaderRowCount);
+    for (var i = 1; i < rowCount; i++) {
+        table.deleteRow(1);
     }
 }
 function populateTableView(table, json) {
@@ -115,7 +122,7 @@ function populateTableView(table, json) {
                 cell.appendChild(valueCell);
             }
             else {
-                cell.innerHTML = '<a class="btn btn-warning" onclick="launchModify(this)" data-employee="' + obj + '" role="button" data-toggle="modal" data-target="#modifyModal">Modify</a><a class="btn btn-danger" style="margin-left:10px" onclick="deleteEmployee(this)" data-id=' + obj._id + ' role="button">Delete</a>';
+                cell.innerHTML = '<a class="btn btn-warning" onclick="launchModify(this)" data-employee=' + JSON.stringify(obj) + ' role="button" data-toggle="modal" data-target="#modifyModal">Modify</a><a class="btn btn-danger" style="margin-left:10px" onclick="deleteEmployee(this)" data-id=' + obj._id + ' data-business=' + obj.business + ' role="button">Delete</a>';
             }
         }
     }
