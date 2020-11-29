@@ -1,5 +1,4 @@
 # Rest_API
-_(juste en dessous des badges sympatiques à placer)_
 
 [![forthebadge](https://forthebadge.com/images/badges/built-by-developers.svg)](http://forthebadge.com)  [![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](http://forthebadge.com)
 
@@ -11,7 +10,7 @@ Actions  available:
 	- Update
 	- Delete
 
-This project must has been created to discover node process and as a concept of Proof (COP)
+This project must has been created to discover node process and as a Proof Of Concept (POC)
 
 ### Requirements
 
@@ -50,9 +49,12 @@ npm run start
 Contribution will be kindly encourage and greatly appreciated
 
 ## Authors
-Listez le(s) auteur(s) du projet ici !
+
 * **Cédric Tellier** _alias_ [@CedricTellier](https://github.com/CedricTellier)
 
+## Deployment
+
+This project is already deploy on heroku and can be reach at the following adress: https://restapitellierc.herokuapp.com/
 
 ## License
 
