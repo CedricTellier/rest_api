@@ -32,6 +32,9 @@ app.use(function(req, res) {
 });
 
 
-app.listen(port);
+// app.listen(port);
 
 console.log('Caddev Rest Full API Start: ' + port);
+
+module.exports = app;
+module.export = mongoose;
