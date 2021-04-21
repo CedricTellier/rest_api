@@ -12,11 +12,12 @@ describe('GET All users', () => {
         request(app)
         .get('/employees/')
         .end((err, res) => {
-            console.log(err); // outputs null
-            console.log(res); // outputs normal-looking response
-            //console.log(res.body) // {}
-            // res.text.should.be.eql('test'); // passes test
-            // done();
+            //console.log(err); // outputs null
+            //console.log(res); // outputs normal-looking response
+            //onsole.log(res.body) // {}
+            res.statusCode.should.be.eql(200);
+            res.body.should.be.array(); // passes test
+            done();
         }); 
         // .send({})
         // .expect(404)
