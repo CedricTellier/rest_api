@@ -1,75 +1,22 @@
 const app = require("../server.js");
 const request = require("supertest");
 const expect = require("chai").expect;
+const getDirs = [ '', '/Caddev', '/CadworkSA', '/Cadcom' , '/Cadskills', '/Capture4cad', '/Cadwork']
+const endpointDir = '/employees';
 
-describe("Test for all employees Get endpoints", function () {
-  it("GET /employees/", function (done) {
-    request(app)
-      .get("/employees/")
-      .expect(200)
-      .end(function (err, res) {
-        if (err) done(err);
-        done();
-      });
-  });
-});
-
-describe("Test for Caddev Get endpoints", function () {
-  it("GET /Caddev", function (done) {
-    request(app)
-      .get("/Caddev/employees/")
-      .expect(200)
-      .end(function (err, res) {
-        if (err) done(err);
-        done();
-      });
-  });
-});
-
-describe("Test for CadworkSA Get endpoint", function () {
-  it("GET /CadworkSA", function (done) {
-    request(app)
-      .get("/CadworkSA/employees/")
-      .expect(200)
-      .end(function (err, res) {
-        if (err) done(err);
-        done();
-      });
-  });
-});
-
-describe("Test for Cadcom Get endpoint", function () {
-  it("GET /Cadcom", function (done) {
-    request(app)
-      .get("/Cadcom/employees/")
-      .expect(200)
-      .end(function (err, res) {
-        if (err) done(err);
-        done();
-      });
-  });
-});
-
-describe("Test for Cadwork Get endpoint", function () {
-  it("GET /Cadwork", function (done) {
-    request(app)
-      .get("/Cadwork/employees/")
-      .expect(200)
-      .end(function (err, res) {
-        if (err) done(err);
-        done();
-      });
-  });
-});
-
-describe("Test Cadskill Get endpoint", function () {
-  it("GET /Cadskills", function (done) {
-    request(app)
-      .get("/Cadskills/employees/")
-      .expect(200)
-      .end(function (err, res) {
-        if (err) done(err);
-        done();
-      });
+getDirs.forEach(directory => {
+  const endpoint = directory + endpointDir;
+  const testDesc = "Test GET " + directory +  " employees"
+  describe(testDesc, function () {
+    const testName = "GET " + endpoint;
+    it(testName, function (done) {
+      request(app)
+        .get(endpoint)
+        .expect(200)
+        .end(function (err, res) {
+          if (err) done(err);
+          done();
+        });
+    });
   });
 });
