@@ -13,12 +13,13 @@ companies.forEach(company => {
             .send(newEmployee)
             .expect('Content-Type', /json/)
             .end(function (err, res) {
-              if (err) done(err);
-              expect(res)
-                .to.have.nested.property('body')
-                .that.includes.all.keys([ 'id', 'firstname', 'lastname', '_id' , 'created_date'])
-              done();
+                if (err) done(err);
+                expect(res)
+                    .to.have.nested.property('body')
+                    .that.includes.all.keys([ 'id', 'firstname', 'lastname', '_id' , 'created_date'])
+                done();
             });
         });
     });
 });
+
