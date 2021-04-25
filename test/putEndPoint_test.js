@@ -16,7 +16,6 @@ companies.forEach(company => {
             Employees = mongoose.model('Employees');
             Employees.find({ "firstname": { $regex: "Test*" }, "lastname": { $regex: "Test*" }, "business": { $regex: company } }, function(err, employee) {
                 employeesList = employee;
-                console.log(employeesList);
                 done();
             });
         });
@@ -33,8 +32,6 @@ companies.forEach(company => {
                 }
             }
             const modifyEmployee = {"firstname" : concatName, "lastname" : concatName};
-            console.log(modifyEndpoint);
-            console.log(modifyEmployee);
             request(app)
                 .put(modifyEndpoint)
                 .send(modifyEmployee)
