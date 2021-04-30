@@ -1,4 +1,5 @@
 
+require('dotenv').config();
 var cors = require('cors');
 var multer = require('multer');
 var upload = multer();
@@ -9,17 +10,14 @@ var express = require('express'),
   Employee = require('./src/api/models/models'), //created model loading here
   bodyParser = require('body-parser');
 
-var dotenv = require('dotenv').config();
 var database;
-if(app.get('env') == 'test')
+if(process.env.NODE_ENV == 'test')
 {
-  console.log('test mode');
-  database = 'mongodb+srv://api_user:4dC59S9Plp9W1nfl@personalcluster.uq0zj.mongodb.net/testing';
+  database = process.env.MONGODB_TEST_URI;
 }
 else
 {
-  console.log('prod mode');
-  database = 'mongodb+srv://api_user:4dC59S9Plp9W1nfl@personalcluster.uq0zj.mongodb.net/testing';
+  database = process.env.MONGODB_PROD_URI;
 }
 //mongoose instance connection url connection
 mongoose.Promise = global.Promise;

@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "nodemon server.js",
     "start": "node server.js",
-    "test": "mocha --exit"
+    "test": "cross-env NODE_ENV=test mocha --exit"
   },
   "repository": {
     "type": "git",

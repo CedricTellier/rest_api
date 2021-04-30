@@ -1,3 +1,4 @@
+require('dotenv').config();
 const app = require("../server.js");
 const request = require("supertest");
 const expect = require("chai").expect;
@@ -5,7 +6,6 @@ const getDirs = [ '', '/Caddev', '/CadworkSA', '/Cadcom' , '/Cadskills', '/Captu
 const endpointDir = '/employees';
 const companies = ['Caddev', 'CadworkSA', 'Cadcom' , 'Cadskills', 'Capture4cad', 'Cadwork'];
 const mongoose = require("mongoose");
-
 
 getDirs.forEach(directory => {
   const endpoint = directory + endpointDir;
