@@ -52,7 +52,7 @@ companies.forEach(company => {
           mongoose.set('useCreateIndex', true);
           mongoose.set('useUnifiedTopology', true);
           mongoose.set('useFindAndModify', false);
-          mongoose.connect('mongodb+srv://api_user:4dC59S9Plp9W1nfl@personalcluster.uq0zj.mongodb.net/testing', { useNewUrlParser: true }); 
+          mongoose.connect(`${process.env.MONGODB_TEST_URI}`, { useNewUrlParser: true }); 
           Employees = mongoose.model('Employees');
           Employees.find({ "firstname": { $regex: "Test*" }, "lastname": { $regex: "Test*" }, "business": { $regex: company } }, function(err, employee) {
               employeesList = employee;
