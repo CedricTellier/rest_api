@@ -1,4 +1,5 @@
 
+require('dotenv').config();
 var cors = require('cors');
 var multer = require('multer');
 var upload = multer();
@@ -9,12 +10,24 @@ var express = require('express'),
   Employee = require('./src/api/models/models'), //created model loading here
   bodyParser = require('body-parser');
 
+<<<<<<< HEAD
+=======
+var database;
+if(process.env.NODE_ENV == 'test')
+{
+  database = process.env.MONGODB_TEST_URI;
+}
+else
+{
+  database = process.env.MONGODB_PROD_URI;
+}
+>>>>>>> development
 //mongoose instance connection url connection
 mongoose.Promise = global.Promise;
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useFindAndModify', false);
-mongoose.connect('mongodb+srv://caddev_user:o2kkHvBPppkyeW5z@caddev.w8pl8.mongodb.net/test', { useNewUrlParser: true }); 
+mongoose.connect(`${database}`, { useNewUrlParser: true }); 
 
 app.use(cors());
 app.options('*', cors())
