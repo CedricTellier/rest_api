@@ -10,8 +10,6 @@ var express = require('express'),
   Employee = require('./src/api/models/models'), //created model loading here
   bodyParser = require('body-parser');
 
-<<<<<<< HEAD
-=======
 var database;
 if(process.env.NODE_ENV == 'test')
 {
@@ -21,7 +19,6 @@ else
 {
   database = process.env.MONGODB_PROD_URI;
 }
->>>>>>> development
 //mongoose instance connection url connection
 mongoose.Promise = global.Promise;
 mongoose.set('useCreateIndex', true);
