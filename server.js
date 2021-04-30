@@ -8,24 +8,13 @@ var express = require('express'),
   mongoose = require('mongoose'),
   Employee = require('./src/api/models/models'), //created model loading here
   bodyParser = require('body-parser');
-require('dotenv').config();
-var database;
-if(app.get('env') == 'test')
-{
-  console.log('test mode');
-  database = process.env.MONGODB_TEST_URI;
-}
-else
-{
-  console.log('prod mode');
-  database = process.env.MONGODB_PROD_URI;
-}
+
 //mongoose instance connection url connection
 mongoose.Promise = global.Promise;
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useFindAndModify', false);
-mongoose.connect(`${database}`, { useNewUrlParser: true }); 
+mongoose.connect('mongodb+srv://caddev_user:o2kkHvBPppkyeW5z@caddev.w8pl8.mongodb.net/test', { useNewUrlParser: true }); 
 
 app.use(cors());
 app.options('*', cors())
