@@ -8,8 +8,7 @@ var express = require('express'),
   mongoose = require('mongoose'),
   Employee = require('./src/api/models/models'), //created model loading here
   bodyParser = require('body-parser');
-
-var dotenv = require('dotenv').config();
+require('dotenv').config();
 var database;
 if(app.get('env') == 'test')
 {
