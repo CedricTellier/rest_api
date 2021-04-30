@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "nodemon server.js",
     "start": "node server.js",
-    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha --exit"
+    "test": "mocha --exit"
   },
   "repository": {
     "type": "git",
