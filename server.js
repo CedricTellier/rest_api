@@ -14,12 +14,12 @@ var database;
 if(app.get('env') == 'test')
 {
   console.log('test mode');
-  database = process.env.MONGODB_TEST_URI;
+  database = 'mongodb+srv://api_user:4dC59S9Plp9W1nfl@personalcluster.uq0zj.mongodb.net/testing';
 }
 else
 {
   console.log('prod mode');
-  database = process.env.MONGODB_PROD_URI;
+  database = 'mongodb+srv://api_user:4dC59S9Plp9W1nfl@personalcluster.uq0zj.mongodb.net/testing';
 }
 //mongoose instance connection url connection
 mongoose.Promise = global.Promise;
