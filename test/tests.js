@@ -13,6 +13,7 @@ getDirs.forEach(directory => {
   describe(testDesc, function () {
     const testName = "GET " + endpoint;
     it(testName, function (done) {
+      this.timeout(10000);
       request(app)
         .get(endpoint)
         .expect(200)
@@ -27,6 +28,7 @@ getDirs.forEach(directory => {
 companies.forEach(company => {
   describe("Test " + company + " POST employee", function () {
     it("POST /employees/", function (done) {
+    this.timeout(10000);
     var concatName = "Test" + company;
     const newEmployee = {"firstname" : concatName, "lastname" : concatName, "business" : company};
     request(app)
@@ -48,6 +50,7 @@ companies.forEach(company => {
   describe("Test " + company + " PUT employee", function () {
       var employeesList = [];
       before(function(done) {
+          this.timeout(10000);
           mongoose.Promise = global.Promise;
           mongoose.set('useCreateIndex', true);
           mongoose.set('useUnifiedTopology', true);
@@ -60,6 +63,7 @@ companies.forEach(company => {
           });
       });
       it("PUT /employees/:id", function (done) {
+          this.timeout(10000);
           var concatName;
           var modifyEndpoint;
           var jsonObject = employeesList[0].toObject();
