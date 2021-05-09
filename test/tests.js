@@ -1,122 +1,71 @@
-require('dotenv').config();
+require("dotenv").config();
 const app = require("../server.js");
 const request = require("supertest");
 const expect = require("chai").expect;
-const getDirs = [ '', '/Caddev', '/CadworkSA', '/Cadcom' , '/Cadskills', '/Capture4cad', '/Cadwork']
-const endpointDir = '/employees';
-const companies = ['Caddev', 'CadworkSA', 'Cadcom' , 'Cadskills', 'Capture4cad', 'Cadwork'];
-const mongoose = require("mongoose");
+const companies = [
+    "Caddev",
+    "CadworkSA",
+    "Cadcom",
+    "Cadskills",
+    "Capture4cad",
+    "Cadwork",
+];
 
-getDirs.forEach(directory => {
-  const endpoint = directory + endpointDir;
-  const testDesc = "Test GET " + directory +  " employees"
-  describe(testDesc, function () {
-    const testName = "GET " + endpoint;
-    it(testName, function (done) {
-      request(app)
-        .get(endpoint)
-        .expect(200)
-        .end(function (err, res) {
-          if (err) done(err);
-          done();
+companies.forEach((company) => {
+    describe("Tests " + company, function () {
+        var id;
+        step("GET " + company, function (done) {
+            request(app)
+                .get("/" + company + "/employees")
+                .expect(200)
+                .end(function (err, res) {
+                    if (err) done(err);
+                    done();
+                });
         });
-    });
-  });
-});
-
-companies.forEach(company => {
-  describe("Test " + company + " POST employee", function () {
-    it("POST /employees/", function (done) {
-    var concatName = "Test" + company;
-    const newEmployee = {"firstname" : concatName, "lastname" : concatName, "business" : company};
-    request(app)
-        .post("/employees/")
-        .send(newEmployee)
-        .expect('Content-Type', /json/)
-        .end(function (err, res) {
-            if (err) done(err);
-            expect(res)
-                .to.have.nested.property('body')
-                .that.includes.all.keys([ 'id', 'firstname', 'lastname', '_id' , 'created_date'])
-            done();
+        step("POST " + company, function (done) {
+            var concatName = "Test" + company;
+            request(app)
+                .post("/employees/")
+                .send({firstname: concatName,lastname: concatName,business: company})
+                .expect("Content-Type", /json/)
+                .end(function (err, res) {
+                    if (err) done(err);
+                    expect(res)
+                        .to.have.nested.property("body")
+                        .that.includes.all.keys([
+                            "id",
+                            "firstname",
+                            "lastname",
+                            "_id",
+                            "created_date",
+                        ]);
+                    id = res.body._id;
+                    done();
+                });
         });
-    });
-  });  
-});
-
-companies.forEach(company => {
-  describe("Test " + company + " PUT employee", function () {
-      var employeesList = [];
-      before(function(done) {
-          mongoose.Promise = global.Promise;
-          mongoose.set('useCreateIndex', true);
-          mongoose.set('useUnifiedTopology', true);
-          mongoose.set('useFindAndModify', false);
-          mongoose.connect(`${process.env.MONGODB_TEST_URI}`, { useNewUrlParser: true }); 
-          Employees = mongoose.model('Employees');
-          Employees.find({ "firstname": { $regex: "Test*" }, "lastname": { $regex: "Test*" }, "business": { $regex: company } }, function(err, employee) {
-              employeesList = employee;
-              done();
-          });
-      });
-      it("PUT /employees/:id", function (done) {
-        var concatName;
-        var modifyEndpoint;
-        var jsonObject = employeesList[0].toObject();
-        for (var key in jsonObject) {
-            if (key == "business") {
-                concatName = "Modified" + jsonObject[key];
-            }
-            else if (key == "_id") {
-                modifyEndpoint = "/employees/" + jsonObject[key];
-            }
-        }
-        const modifyEmployee = {"firstname" : concatName, "lastname" : concatName};
-        request(app)
-            .put(modifyEndpoint)
-            .send(modifyEmployee)
-            .expect(200)
-            .end(function (err, res) {
-                if (err) done(err);
-                done();
-            });
+        step("PUT " + company, function (done) {
+            var concatName = "Modified" + company;
+            request(app)
+                .put("/employees/" + id)
+                .send({firstname: concatName, lastname: concatName})
+                .expect(200)
+                .end(function (err, res) {
+                    if (err) done(err);
+                    done();
+                });
         });
-    });
-});
-
-companies.forEach(company => {
-  describe("Test " + company + " DELETE employee", function () {
-      var employeesList = [];
-      before(function(done) {
-          mongoose.Promise = global.Promise;
-          mongoose.set('useCreateIndex', true);
-          mongoose.set('useUnifiedTopology', true);
-          mongoose.set('useFindAndModify', false);
-          mongoose.connect(`${process.env.MONGODB_TEST_URI}`, { useNewUrlParser: true }); 
-          Employees = mongoose.model('Employees');
-          Employees.find({ "firstname": { $regex: "Modified*" }, "lastname": { $regex: "Modified*" }, "business": { $regex: company } }, function(err, employee) {
-              employeesList = employee;
-              done();
-          });
-      });
-      it("DELETE /employees/:id", function (done) {
-        var deleteEndpoint;
-        var jsonObject = employeesList[0].toObject();
-        for (var key in jsonObject) {
-            if (key == "_id") {
-              deleteEndpoint = "/employees/" + jsonObject[key];
-            }
-        }
-        request(app)
-            .delete(deleteEndpoint)
-            .expect(200)
-            .end(function (err, res) {
-                if (err) done(err);
-                expect(res)
-                .to.have.nested.property('body')
-                .that.includes.all.keys([ 'message'])
-                done();
-            });
+        step("DELETE " + company, function (done) {
+            request(app)
+                .delete("/employees/" + id)
+                .expect(200)
+                .end(function (err, res) {
+                    if (err) done(err);
+                    expect(res)
+                        .to.have.nested.property("body")
+                        .that.includes.all.keys(["message"]);
+                    done();
+                });
         });
     });
 });
