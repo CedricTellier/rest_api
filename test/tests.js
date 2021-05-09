@@ -7,12 +7,12 @@ const endpointDir = '/employees';
 const companies = ['Caddev', 'CadworkSA', 'Cadcom' , 'Cadskills', 'Capture4cad', 'Cadwork'];
 const mongoose = require("mongoose");
 
+describe("Test GET", function () {
 getDirs.forEach(directory => {
   const endpoint = directory + endpointDir;
   const testDesc = "Test GET " + directory +  " employees"
-  describe(testDesc, function () {
     const testName = "GET " + endpoint;
-    it(testName, function (done) {
+    step(testName, function (done) {
       request(app)
         .get(endpoint)
         .expect(200)
@@ -23,10 +23,9 @@ getDirs.forEach(directory => {
     });
   });
 });
-
+describe("Test POST employee", function () {
 companies.forEach(company => {
-  describe("Test " + company + " POST employee", function () {
-    it("POST /employees/", function (done) {
+    step("POST /employees/", function (done) {
     var concatName = "Test" + company;
     const newEmployee = {"firstname" : concatName, "lastname" : concatName, "business" : company};
     request(app)
@@ -43,9 +42,8 @@ companies.forEach(company => {
     });
   });  
 });
-
+describe("Test PUT employee", function () {
 companies.forEach(company => {
-  describe("Test " + company + " PUT employee", function () {
       var employeesList = [];
       before(function(done) {
           mongoose.Promise = global.Promise;
@@ -59,7 +57,7 @@ companies.forEach(company => {
               done();
           });
       });
-      it("PUT /employees/:id", function (done) {
+      step("PUT /employees/:id", function (done) {
         var concatName;
         var modifyEndpoint;
         var jsonObject = employeesList[0].toObject();
@@ -83,9 +81,8 @@ companies.forEach(company => {
         });
     });
 });
-
+describe("Test DELETE employee", function () {
 companies.forEach(company => {
-  describe("Test " + company + " DELETE employee", function () {
       var employeesList = [];
       before(function(done) {
           mongoose.Promise = global.Promise;
@@ -99,7 +96,7 @@ companies.forEach(company => {
               done();
           });
       });
-      it("DELETE /employees/:id", function (done) {
+      step("DELETE /employees/:id", function (done) {
         var deleteEndpoint;
         var jsonObject = employeesList[0].toObject();
         for (var key in jsonObject) {
