@@ -1,43 +1,54 @@
-require('dotenv').config();
+require("dotenv").config();
 const app = require("../server.js");
 const request = require("supertest");
 const expect = require("chai").expect;
-const companies = ['Caddev', 'CadworkSA', 'Cadcom' , 'Cadskills', 'Capture4cad', 'Cadwork'];
+const companies = [
+    "Caddev",
+    "CadworkSA",
+    "Cadcom",
+    "Cadskills",
+    "Capture4cad",
+    "Cadwork",
+];
 
-companies.forEach(company => {
+companies.forEach((company) => {
     describe("Tests " + company, function () {
         var id;
         step("GET " + company, function (done) {
             request(app)
-              .get("/" + company +  "/employees")
-              .expect(200)
-              .end(function (err, res) {
-                if (err) done(err);
-                done();
-              });
-          });
+                .get("/" + company + "/employees")
+                .expect(200)
+                .end(function (err, res) {
+                    if (err) done(err);
+                    done();
+                });
+        });
         step("POST " + company, function (done) {
             var concatName = "Test" + company;
-            const newEmployee = {"firstname" : concatName, "lastname" : concatName, "business" : company};
             request(app)
                 .post("/employees/")
-                .send(newEmployee)
-                .expect('Content-Type', /json/)
+                .send({firstname: concatName,lastname: concatName,business: company})
+                .expect("Content-Type", /json/)
                 .end(function (err, res) {
                     if (err) done(err);
                     expect(res)
-                        .to.have.nested.property('body')
-                        .that.includes.all.keys([ 'id', 'firstname', 'lastname', '_id' , 'created_date'])
+                        .to.have.nested.property("body")
+                        .that.includes.all.keys([
+                            "id",
+                            "firstname",
+                            "lastname",
+                            "_id",
+                            "created_date",
+                        ]);
                     id = res.body._id;
                     done();
                 });
         });
         step("PUT " + company, function (done) {
             var concatName = "Modified" + company;
-            const modifyEmployee = {"firstname" : concatName, "lastname" : concatName};
             request(app)
                 .put("/employees/" + id)
-                .send(modifyEmployee)
+                .send({firstname: concatName, lastname: concatName})
                 .expect(200)
                 .end(function (err, res) {
                     if (err) done(err);
@@ -51,10 +62,10 @@ companies.forEach(company => {
                 .end(function (err, res) {
                     if (err) done(err);
                     expect(res)
-                    .to.have.nested.property('body')
-                    .that.includes.all.keys([ 'message'])
+                        .to.have.nested.property("body")
+                        .that.includes.all.keys(["message"]);
                     done();
                 });
-            });
+        });
     });
 });
