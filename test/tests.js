@@ -3,12 +3,12 @@ const app = require("../server.js");
 const request = require("supertest");
 const expect = require("chai").expect;
 const companies = [
-    "Caddev",
-    "CadworkSA",
-    "Cadcom",
-    "Cadskills",
-    "Capture4cad",
-    "Cadwork",
+    "Google",
+    "Facebook",
+    "Amazon",
+    "Apple",
+    "Microsoft",
+    "Samsung",
 ];
 
 companies.forEach((company) => {

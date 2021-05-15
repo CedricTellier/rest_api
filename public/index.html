@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 			integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-		<title>Rest API Caddev</title>
+		<title>Rest Employees API</title>
 		<style type="text/css">
 			td,
 			tr {
@@ -19,7 +19,7 @@
 	</head>
 	<body>
 		<h1 style="text-align: center;">
-			Rest API Caddev
+			Rest Employees API
 		</h1>
 		<div style="margin-left: 50px;margin-right:50px">
 			<h2 style="margin-top:50px;">Get Employees</h2>
@@ -28,22 +28,22 @@
 					<a class="btn btn-primary" onclick="getAllEmployees()" role="button">All Employees</a>
 				</div>
 				<div class="col-1">
-					<a class="btn btn-secondary" onclick="getAllEmployees('Caddev/')" role="button">Caddev</a>
+					<a class="btn btn-secondary" onclick="getAllEmployees('Google/')" role="button">Google</a>
 				</div>
 				<div class="col-1">
-					<a class="btn btn-success" onclick="getAllEmployees('Cadcom/')" role="button">Cadcom</a>
+					<a class="btn btn-success" onclick="getAllEmployees('Facebook/')" role="button">Facebook</a>
 				</div>
 				<div class="col-2">
-					<a class="btn btn-danger" onclick="getAllEmployees('Capture4cad/')" role="button">Capture4Cad</a>
+					<a class="btn btn-danger" onclick="getAllEmployees('Amazon/')" role="button">Amazon</a>
 				</div>
 				<div class="col-2">
-					<a class="btn btn-warning" onclick="getAllEmployees('CadworkSA/')" role="button">Cadwork SA</a>
+					<a class="btn btn-warning" onclick="getAllEmployees('Samsung/')" role="button">Samsung</a>
 				</div>
 				<div class="col-2">
-					<a class="btn btn-secondary" onclick="getAllEmployees('Cadwork/')" role="button">Cadwork France</a>
+					<a class="btn btn-secondary" onclick="getAllEmployees('Microsoft/')" role="button">Microsoft</a>
 				</div>
 				<div class="col-1">
-					<a class="btn btn-info" onclick="getAllEmployees('Cadskills/')" role="button">CadSkills</a>
+					<a class="btn btn-info" onclick="getAllEmployees('Apple/')" role="button">Apple</a>
 				</div>
 			</div>
 			<div style="margin-top:25px;">
@@ -81,12 +81,12 @@
 						<div class="form-group">
 							<label for="business">Select a Company</label>
 							<select class="form-control" id="business" name="business">
-								<option value="Caddev">Caddev</option>
-								<option value="CadworkSA">Cadwork SA</option>
-								<option value="Cadwork">Cadwork France</option>
-								<option value="Cadcom">Cadcom</option>
-								<option value="Cadskills">Cadskills</option>
-								<option value="Capture4cad">Capture4Cad</option>
+								<option value="Google">Google</option>
+								<option value="Samsung">Samsung</option>
+								<option value="Microsoft">Microsoft</option>
+								<option value="Facebook">Facebook</option>
+								<option value="Apple">Apple</option>
+								<option value="Amazon">Amazon</option>
 							</select>
 						</div>
 						<a type="submit" class="btn btn-primary" onclick="createNewEmployee()" role="button">Create</a>
@@ -121,12 +121,12 @@
 								<div class="form-group">
 									<label for="businessModify">Select a Company</label>
 									<select class="form-control" id="businessModify" name="business">
-										<option value="Caddev">Caddev</option>
-										<option value="CadworkSA">Cadwork SA</option>
-										<option value="Cadwork">Cadwork France</option>
-										<option value="Cadcom">Cadcom</option>
-										<option value="Cadskills">Cadskills</option>
-										<option value="Capture4cad">Capture4Cad</option>
+										<option value="Google">Google</option>
+										<option value="Samsung">Samsung</option>
+										<option value="Microsoft">Microsoft</option>
+										<option value="Facebook">Facebook</option>
+										<option value="Apple">Apple</option>
+										<option value="Amazon">Amazon</option>
 									</select>
 								</div>
 							</form>
