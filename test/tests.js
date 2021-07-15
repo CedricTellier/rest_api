@@ -2,6 +2,7 @@ require("dotenv").config();
 const app = require("../server.js");
 const request = require("supertest");
 const expect = require("chai").expect;
+const should = require("chai").should;
 const companies = [
     "Google",
     "Facebook",
@@ -41,6 +42,25 @@ companies.forEach((company) => {
                             "created_date",
                         ]);
                     id = res.body._id;
+                    done();
+                });
+        });
+        step("GET " + id , function (done) {
+            request(app)
+                .get("/employees/" + id)
+                .expect(200)
+                .end(function (err, res) {
+                    if (err) done(err);
+                    expect(res)
+                        .to.have.nested.property("body")
+                        .that.includes.all.keys([
+                            "id",
+                            "firstname",
+                            "lastname",
+                            "_id",
+                            "created_date",
+                        ]);
+                    expect(res.body._id).equal(id)
                     done();
                 });
         });
